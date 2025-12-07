@@ -1,0 +1,159 @@
+# TSA Passenger Data - Holiday-Aligned Week Configuration
+# This file defines the special travel weeks aligned by US holidays
+# Each week runs Monday-Sunday (7 days)
+
+holiday_weeks:
+  - name: "New Year Holiday"
+    description: "Week containing New Year's Day (Jan 1)"
+    anchor_date: "01-01"  # Month-Day format
+    anchor_type: "fixed"  # fixed or relative
+    week_offset: 0  # 0 = same week as anchor, -1 = week before, 1 = week after
+    start_day_of_week: "Monday"  # Always Monday
+    priority: 3
+
+  - name: "MLK Jr. Day"
+    description: "Week containing MLK Jr. Day (Third Monday in January)"
+    anchor_date: "01-15"  # Approximate - third Monday
+    anchor_type: "relative"
+    relative_rule: "third_monday_january"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 2
+
+  - name: "Presidents Day"
+    description: "Week containing Presidents Day (Third Monday in February)"
+    anchor_date: "02-15"  # Approximate - third Monday
+    anchor_type: "relative"
+    relative_rule: "third_monday_february"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 2
+
+  - name: "Spring Break"
+    description: "Spring Break period (late March/early April)"
+    anchor_date: "03-20"  # Approximate
+    anchor_type: "fixed"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 2
+
+  - name: "Easter/Spring Holiday"
+    description: "Week containing Easter (varies by year)"
+    anchor_date: "04-01"  # Approximate
+    anchor_type: "relative"
+    relative_rule: "easter"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 2
+
+  - name: "Memorial Day"
+    description: "Week containing Memorial Day (Last Monday in May)"
+    anchor_date: "05-31"  # Approximate - last Monday
+    anchor_type: "relative"
+    relative_rule: "last_monday_may"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 2
+
+  - name: "July 4th Independence Day"
+    description: "Week containing July 4th"
+    anchor_date: "07-04"
+    anchor_type: "fixed"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 2
+
+  - name: "Labor Day"
+    description: "Week containing Labor Day (First Monday in September)"
+    anchor_date: "09-01"  # Approximate - first Monday
+    anchor_type: "relative"
+    relative_rule: "first_monday_september"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 2
+
+  - name: "Columbus Day"
+    description: "Week containing Columbus Day (Second Monday in October)"
+    anchor_date: "10-08"  # Approximate - second Monday
+    anchor_type: "relative"
+    relative_rule: "second_monday_october"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 2
+
+  - name: "Halloween"
+    description: "Week containing Halloween (Oct 31)"
+    anchor_date: "10-31"
+    anchor_type: "fixed"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 1
+
+  - name: "Veterans Day"
+    description: "Week containing Veterans Day (Nov 11)"
+    anchor_date: "11-11"
+    anchor_type: "fixed"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 1
+
+  - name: "Thanksgiving"
+    description: "Thanksgiving week (Fourth Thursday in November)"
+    anchor_date: "11-23"  # Approximate - fourth Thursday
+    anchor_type: "relative"
+    relative_rule: "fourth_thursday_november"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 5  # Highest priority - busiest travel period
+
+  - name: "Black Friday"
+    description: "Week after Thanksgiving"
+    anchor_date: "11-23"  # Approximate - fourth Thursday
+    anchor_type: "relative"
+    relative_rule: "fourth_thursday_november"
+    week_offset: 1  # Week after Thanksgiving
+    start_day_of_week: "Monday"
+    priority: 4
+
+  - name: "Christmas Holiday"
+    description: "Christmas/New Year period (Dec 19 - Jan 2)"
+    anchor_date: "12-25"
+    anchor_type: "fixed"
+    week_offset: 0
+    start_day_of_week: "Monday"
+    priority: 5  # Second busiest travel period
+    spans_year_boundary: true
+
+# Data processing settings
+data_settings:
+  year_range: [2019, 2025]
+  min_complete_year: 2019
+  max_complete_year: 2024
+  current_incomplete_year: 2025
+  
+  # How to handle incomplete weeks
+  incomplete_week_handling: "include"  # "include", "exclude", or "interpolate"
+  
+  # How to handle year boundary weeks
+  year_boundary_handling: "split"  # "split" = separate weeks, "combine" = combine across years
+
+# Visualization settings
+visualization:
+  figure_size: [14, 8]
+  line_width: 2.5
+  marker_size: 6
+  colors:
+    2019: "#1f77b4"  # Blue
+    2020: "#ff7f0e"  # Orange
+    2021: "#2ca02c"  # Green
+    2022: "#d62728"  # Red
+    2023: "#9467bd"  # Purple
+    2024: "#8c564b"  # Brown
+    2025: "#e377c2"  # Pink
+  
+  title: "TSA Weekly Average Passenger Checkins - Holiday Aligned (2019-2025)"
+  xlabel: "Holiday Travel Period"
+  ylabel: "Average Daily Passengers"
+  grid: true
+  legend_loc: "best"
+  dpi: 300
