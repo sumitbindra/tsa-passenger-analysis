@@ -42,8 +42,14 @@ class TSADataFetcher:
         Returns:
             DataFrame with columns: date, passengers, year
         """
-        url = f"{self.BASE_URL}/{year}"
-        self.log(f"Fetching data for {year} from {url}")
+        # Current year data is on main page, archive years have dedicated pages
+        current_year = datetime.now().year
+        if year == current_year:
+            url = self.BASE_URL
+            self.log(f"Fetching current year ({year}) data from main page: {url}")
+        else:
+            url = f"{self.BASE_URL}/{year}"
+            self.log(f"Fetching archive data for {year} from {url}")
         
         try:
             response = self.session.get(url, timeout=30)
@@ -78,6 +84,11 @@ class TSADataFetcher:
                 try:
                     # Parse date - TSA format is typically "MM/DD/YYYY"
                     date = pd.to_datetime(date_str)
+                    
+                    # Filter by year if fetching from main page (which may have multiple years)
+                    if year == current_year and date.year != year:
+                        continue
+                    
                     passengers = int(passengers_str)
                     
                     rows.append({
