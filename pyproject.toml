@@ -11,10 +11,14 @@ dependencies = [
     "python-dateutil>=2.8.0",
     "matplotlib>=3.7.0",
     "seaborn>=0.12.0",
+    "beautifulsoup4>=4.12.0",
+    "requests>=2.31.0",
+    "lxml>=4.9.0",
 ]
 
 [project.scripts]
 tsa-analysis = "tsa_holiday_analysis:main"
+fetch-tsa-data = "fetch_tsa_data:main"
 
 [build-system]
 requires = ["hatchling"]

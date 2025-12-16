@@ -15,8 +15,9 @@ Instead of traditional week-of-year analysis, this system:
 ## Data Source
 
 - **TSA Official Checkpoint Travel Numbers**: https://www.tsa.gov/travel/passenger-volumes
-- **Time Period**: January 1, 2019 - December 4, 2025
-- **Data Points**: 2,530 daily records
+- **Automated Fetching**: Use `fetch_tsa_data.py` to download latest data automatically
+- **Time Period**: January 1, 2019 - Present
+- **Update Frequency**: TSA updates data Monday-Friday by 9 AM
 - **Coverage**: 14 major holiday travel periods
 
 ## Files Generated
@@ -35,6 +36,7 @@ Instead of traditional week-of-year analysis, this system:
 - **`tsa_calendar_weeks_plot.png`** - NEW: 52 ISO calendar weeks on x-axis with colored points showing only where holidays occur each year
 
 ### Scripts
+- **`fetch_tsa_data.py`** - Automated data fetcher (downloads latest TSA data)
 - **`tsa_holiday_analysis.py`** - Main analysis script (executable)
 
 ## Holiday Weeks Analyzed
@@ -109,6 +111,37 @@ Instead of traditional week-of-year analysis, this system:
 
 ## How to Use
 
+### Fetch Latest TSA Data
+
+To download the most recent TSA checkpoint passenger data:
+
+```bash
+# Using uv (recommended)
+uv run fetch_tsa_data.py --verbose
+
+# Or using Python directly
+python fetch_tsa_data.py --verbose
+```
+
+This will:
+- Automatically scrape data from the TSA website for years 2019-2025
+- Save to `tsa_raw_data.csv` in the correct format
+- Show progress information with `--verbose` flag
+
+**Options:**
+```bash
+# Fetch specific years only
+uv run fetch_tsa_data.py --years 2023 2024 2025
+
+# Save to custom location
+uv run fetch_tsa_data.py --output data/my_tsa_data.csv
+
+# See all options
+uv run fetch_tsa_data.py --help
+```
+
+**Note:** Data is updated by TSA Monday-Friday by 9 AM. Run this script periodically to keep your analysis current.
+
 ### Run the Analysis
 ```bash
 python3 tsa_holiday_analysis.py
@@ -167,13 +200,16 @@ Open the CSV files in your preferred tool:
 
 ## Dependencies
 
-- Python 3.11+
+- Python 3.8+
 - pandas
 - numpy
 - matplotlib
 - seaborn
 - pyyaml
 - python-dateutil
+- beautifulsoup4 (for data fetching)
+- requests (for data fetching)
+- lxml (for HTML parsing)
 
 ## Interpretation Guide
 
